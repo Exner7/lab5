@@ -17,6 +17,7 @@ functionalities for the MongoDB database.
 2. Installed **Python3**, **flask** and **pymongo**.
 
 ### Testing endpoints
+
 It is recommended to use Postman for the endpoints and requests.
 The flask app is set to port 5000. So all endpoints are of the form:
 
@@ -25,19 +26,13 @@ The flask app is set to port 5000. So all endpoints are of the form:
 ## Endpoints
 ---
 #### GET
-<br/>
-
 *   **<code>/get-course</code>**
-<br/>
-
     Which will accept an argument <code>courseID</code> and will return the information for the corresponding course.
 
 ---
 #### POST
-<br/>
 
 *    **<code>/insert-course</code>**
-<br/>
 
         Which will await from the user a JSON in the form of:
 
@@ -51,11 +46,10 @@ The flask app is set to port 5000. So all endpoints are of the form:
         if no other course with the same courseID is already exists.
 <br/>
 
-*    **<code>/insert-course-description</code>**
-<br/>
+*   **<code>/insert-course-description</code>**
 
-        Which will accept an argument <code>courseID</code> and will add
-        a description to the course with the provided courseID.
-        The description is to be provided as json in the request.
+    Which will accept an argument <code>courseID</code> and will add
+    a description to the course with the provided courseID.
+    The description is to be provided as json in the request.
         
 ---
