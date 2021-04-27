@@ -102,6 +102,45 @@ def insert_course():
     return Response( 'New course inserted successfully.', status = 200, mimetype = 'application/json' )
 
 
+# [ POST ] ( endpoint ): /insert-course-description
+#
+# Which will accept an argument courseID and will add
+# a description to the course with the provided courseID.
+# The description is to be provided as json in the request.
+@app.route( '/insert-course-description', methods = [ 'POST' ] )
+def insert_course_description():
+
+    # get the courseID argument
+    course_id = request.args.get( 'courseID' )
+    
+    # if course_id is empty return with an error response
+    if not course_id:
+        return Response( 'Improper request arguments.', status = 500, mimetype = 'application/json' )
+    
+    # retreive course from database
+    course = courses.find_one( { 'courseID': course_id } )
+
+    # if the course does not exist return with an error response
+    if not course:
+        return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
+    
+    try:
+        # retrieve the request json data
+        data = json.loads( request.data )
+    except Exception as e:
+        # if an exception occurs return with an error response
+        return Response( 'Bad JSON content', status = 500, mimetype = 'application/json' )
+    
+    # if data doesn't contain required description key return with an error response
+    if 'description' not in data:
+        return Response( 'Improper request arguments.', status = 500, mimetype = 'application/json' )
+    
+    # update the course with the description
+    courses.update_one( { 'courseID': course_id }, { '$set': { 'description': data[ 'description' ] } } )
+
+    return Response( 'Description added to course.', status = 200, mimetype = 'application/json' )
+    
+
 # ... Endpoints Declarations End
 
 
