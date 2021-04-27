@@ -124,6 +124,9 @@ def insert_course_description():
     if not course:
         return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
     
+    # initialize the request data object
+    data = None
+
     try:
         # retrieve the request json data
         data = json.loads( request.data )
@@ -139,7 +142,53 @@ def insert_course_description():
     courses.update_one( { 'courseID': course_id }, { '$set': { 'description': data[ 'description' ] } } )
 
     return Response( 'Description added to course.', status = 200, mimetype = 'application/json' )
+
+
+# [ PUT ] ( endpoint ): /add-course/<string:email>
+#
+# Receives a courseID in the request body (as JSON) and adds the corresponding
+# course to the student with the provided email in an array field called courses.
+@app.route( '/add-course/<string:email>', methods = [ 'PUT' ] )
+def add_course( email ):
+
+    # initialize the request data object
+    data = None
+
+    try:
+        # retrieve the request json data
+        data = json.loads( request.data )
+    except Exception as e:
+        # if an exception occurs return with an error response
+        return Response( 'Bad JSON content', status = 500, mimetype = 'application/json' )
     
+    # if courseID not in request data return with an error response
+    if 'courseID' not in data:
+        return Response( 'Improper request data', status = 500, mimetype = 'application/json' )
+    
+    # find the student with the provided email
+    student = students.find_one( { 'email': email } )
+
+    # if the student is not found return with an error response
+    if not student:
+        return Response( 'No student found.', status = 500, mimetype = 'application/json' )
+    
+    # find the corresponding course
+    course = courses.find_one( { 'courseID': data[ 'courseID' ] } )
+    
+    # if the course does not exists return with an error response
+    if not course:
+        return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
+    
+    # ( optional ) to not include the ObjectId
+    # del course[ '_id' ]
+
+    # add the course to the student's courses
+    students.update_one( { 'email': email }, { '$addToSet': { 'courses': course } } )
+
+    # return with a success response
+    return Response( 'Course added to student\'s courses.', status = 200, mimetype = 'application/json' )
+
+
 
 # ... Endpoints Declarations End
 

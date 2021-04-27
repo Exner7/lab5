@@ -53,3 +53,11 @@ The flask app is set to port 5000. So all endpoints are of the form:
     The description is to be provided as json in the request.
         
 ---
+#### PUT
+
+*   **<code>/add-course/&lt;string:email&gt;</code>**
+
+    Receives a <code>courseID</code> in the request body (as JSON) and adds
+    the corresponding course to the student with the provided email
+    in an array field called courses.
+---
