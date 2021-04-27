@@ -189,6 +189,49 @@ def add_course( email ):
     return Response( 'Course added to student\'s courses.', status = 200, mimetype = 'application/json' )
 
 
+# [ PUT ] ( endpoint ): /update-course
+#
+# Which will receive a courseID as an argument and will
+# update the all of the corresponding course's key values.
+@app.route( '/update-course', methods = [ 'PUT' ] )
+def update_course():
+    
+    # retrieve the courseID from the arguments
+    course_id = request.args.get( 'courseID' )
+
+    # if course_id is empty return with an error response
+    if not course_id:
+        return Response( 'Improper arguments', status = 500, mimetype = 'application/json' )
+    
+    # if there is no course corresponding to the provided courseID return with an error response
+    if courses.find( { 'courseID': course_id } ).count() == 0:
+        return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
+
+    # initialize request data object
+    data = None
+
+    try:
+        # retrieve the json request data
+        data = json.loads( request.data )
+    except Exception as e:
+        # if an exception occurs return with an error response
+        return Response( 'Bad JSON content', status = 500, mimetype = 'application/json' )
+    
+    # if json request data doesn't contain all of the required key-values return with an error response
+    if 'courseID' not in data or 'name' not in data or 'ects' not in data or 'description' not in data:
+        return Response( 'Improper request data', status = 500, mimetype = 'application/json' )
+    
+    # update the course
+    courses.update_one( { 'courseID': course_id }, { '$set': {
+        'courseID': data[ 'courseID' ],
+        'name': data[ 'name' ],
+        'ects': data[ 'ects' ],
+        'description': data[ 'description' ]
+    } } )
+
+    # return with a success response
+    return Response( 'Course updated successfully.', status = 200, mimetype = 'application/json' )
+
 
 # ... Endpoints Declarations End
 
