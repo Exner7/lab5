@@ -25,27 +25,15 @@ The flask app is set to port 5000. So all endpoints are of the form:
 ## Endpoints
 ---
 #### GET
-*   **<code>/get-course</code>**
-
+*   **<code>/get-course</code>**<br>
     Which will accept an argument <code>courseID</code> and will return the information for the corresponding course.
 
 ---
 #### POST
 *    **<code>/insert-course</code>**
+<br>
 
-        Which will await from the user a JSON in the form:
-
-            {
-                "name": <string>
-                "courseID": <string>
-                "ects": <int>
-            }
-
-        And will insert it as a course in the Courses collection, only
-        if no other course with the same courseID is already exists.
-*    **<code>/insert-course</code>**
-
-        Which will await from the user a JSON in the form:
+        Which will await from the user a JSON in the form of:
 
             {
                 "name": <string>
@@ -55,4 +43,12 @@ The flask app is set to port 5000. So all endpoints are of the form:
 
         And will insert it as a course in the Courses collection, only
         if no other course with the same courseID is already exists.
+<br>
+*    **<code>/insert-course-description</code>**
+<br>
+
+        Which will accept an argument <code>courseID</code> and will add
+        a description to the course with the provided courseID.
+        The description is to be provided as json in the request.
+        
 ---
