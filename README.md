@@ -50,6 +50,7 @@ The flask app is set to port 5000. So all endpoints are of the form:
         And will insert it as a course in the Courses collection, only
         if no other course with the same courseID is already exists.
 <br/>
+
 *    **<code>/insert-course-description</code>**
 <br/>
 
