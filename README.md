@@ -23,7 +23,7 @@ The flask app is set to port 5000. So all endpoints are of the form:
     localhost:5000/endpoint
 
 ## Endpoints
-***
+---
 #### GET
     /get-course
 
