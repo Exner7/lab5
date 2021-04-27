@@ -27,6 +27,7 @@ The flask app is set to port 5000. So all endpoints are of the form:
 ---
 #### GET
 *   **<code>/get-course</code>**
+
     Which will accept an argument <code>courseID</code> and will return the information for the corresponding course.
 
 ---
