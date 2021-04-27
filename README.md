@@ -21,3 +21,12 @@ It is recommended to use Postman for the endpoints and requests.
 The flask app is set to port 5000. So all endpoints are of the form:
 
     localhost:5000/endpoint
+
+## Endpoints
+***
+####GET
+    /get-course
+
+Which will accept an argument <code>courseID</code> and will return the information for the corresponding course.
+
+---
