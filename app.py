@@ -2,6 +2,8 @@
 from flask import Flask, jsonify, request, Response
 from pymongo import MongoClient
 
+import json
+
 
 # Initialize the flask app
 app = Flask( __name__ )
@@ -36,7 +38,7 @@ def get_course():
     
     # if course_id is empty return with an error response
     if not course_id:
-        return Response( 'Improper request arguments.', status = 400, mimetype = 'application/json' )
+        return Response( 'Improper request arguments.', status = 500, mimetype = 'application/json' )
     
     # retreive course from database
     course = courses.find_one( { 'courseID': course_id } )
@@ -44,7 +46,7 @@ def get_course():
     # initialize output
     output = None
 
-    # if course found construct output as JSON
+    # if course found construct output as json
     if course:
         output = {
             'name': course[ 'name' ],
@@ -57,6 +59,47 @@ def get_course():
             output[ 'description' ] = course[ 'description' ]
     
     return jsonify( output )
+
+
+# [POST] ( endpoint ): /insert-course
+#
+# Which will await a json from the user with the keys below:
+# 'name', 'courseID' and 'ects'.
+# And will insert it as a course in the Courses collection.
+@app.route( '/insert-course', methods = [ 'POST' ] )
+def insert_course():
+    
+    # initialize the request data object
+    data = None
+    
+    try:
+        # retrieve the request json data
+        data = json.loads( request.data )
+    except Exception as e:
+        # if an exception occurs return with an error response
+        return Response( 'Bad JSON content', status = 500, mimetype = 'application/json' )
+    
+    # if data doesn't contain required keys return with an error response
+    if 'name' not in data or 'courseID' not in data or 'ects' not in data:
+        return Response( 'Improper request data', status = 500, mimetype = 'application/json' )
+    
+    # if a course with courseID is already present in the courses collection
+    if ( courses.find( { 'courseID': data[ 'courseID' ] } ).count() != 0 ):
+        # return with a Response message
+        return Response( 'Given course already exists.', status = 200, mimetype = 'application/json' )
+
+    # construct course to be inserted
+    course = {
+        'name': data[ 'name' ],
+        'courseID': data[ 'courseID' ],
+        'ects': data[ 'ects' ]
+    }
+
+    # insert course
+    courses.insert_one( course )
+    
+    # return with a success response
+    return Response( 'New course inserted successfully.', status = 200, mimetype = 'application/json' )
 
 
 # ... Endpoints Declarations End
