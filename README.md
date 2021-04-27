@@ -15,3 +15,9 @@ functionalities for the MongoDB database.
         used to populate the Students collection
 
 2. Installed **Python3**, **flask** and **pymongo**.
+
+### Testing endpoints
+It is recommended to use Postman for the endpoints and requests.
+The flask app is set to port 5000. So all endpoints are of the form:
+
+    localhost:5000/endpoint
