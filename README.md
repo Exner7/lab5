@@ -11,8 +11,8 @@ functionalities for the MongoDB database.
 1. Running **MongoDB** or a running **MongoDB docker container**.
     * A database in the MongoDB called **InfoSys**.
     * The collections **Students** and **Courses**.
-        * (Optional) This [students.json](https://github.com/csymvoul/Information-Systems-Lab/blob/master/lab3-4/students.json) file can be
-        used to populate the Students collection
+        * (Optional) students.json and courses.json
+        may be used to populate the two collections.
 
 2. Installed **Python3**, **flask** and **pymongo**.
 
@@ -77,5 +77,5 @@ The flask app is set to port 5000. So all endpoints are of the form:
 
 * **<code>/delete-student</code>**
 
-    Deletes the student with the <code>email</code> that is being provided as an argument.
+    Delete the student with the <code>email</code> that is being provided as an argument.
 ---

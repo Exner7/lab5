@@ -38,7 +38,7 @@ def get_course():
     
     # if course_id is empty return with an error response
     if not course_id:
-        return Response( 'Improper request arguments.', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request arguments.', status = 400, mimetype = 'application/json' )
     
     # retreive course from database
     course = courses.find_one( { 'courseID': course_id } )
@@ -81,12 +81,12 @@ def insert_course():
     
     # if data doesn't contain required keys return with an error response
     if 'name' not in data or 'courseID' not in data or 'ects' not in data:
-        return Response( 'Improper request data', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request data', status = 400, mimetype = 'application/json' )
     
     # if a course with courseID is already present in the courses collection
     if ( courses.find( { 'courseID': data[ 'courseID' ] } ).count() != 0 ):
         # return with a Response message
-        return Response( 'Given course already exists.', status = 200, mimetype = 'application/json' )
+        return Response( 'Given course already exists.', status = 400, mimetype = 'application/json' )
 
     # construct course to be inserted
     course = {
@@ -115,14 +115,14 @@ def insert_course_description():
     
     # if course_id is empty return with an error response
     if not course_id:
-        return Response( 'Improper request arguments.', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request arguments.', status = 400, mimetype = 'application/json' )
     
     # retreive course from database
     course = courses.find_one( { 'courseID': course_id } )
 
     # if the course does not exist return with an error response
     if not course:
-        return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
+        return Response( 'The course does not exist.', status = 400, mimetype = 'application/json' )
     
     # initialize the request data object
     data = None
@@ -136,7 +136,7 @@ def insert_course_description():
     
     # if data doesn't contain required description key return with an error response
     if 'description' not in data:
-        return Response( 'Improper request arguments.', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request arguments.', status = 400, mimetype = 'application/json' )
     
     # update the course with the description
     courses.update_one( { 'courseID': course_id }, { '$set': { 'description': data[ 'description' ] } } )
@@ -163,21 +163,21 @@ def add_course( email ):
     
     # if courseID not in request data return with an error response
     if 'courseID' not in data:
-        return Response( 'Improper request data', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request data', status = 400, mimetype = 'application/json' )
     
     # find the student with the provided email
     student = students.find_one( { 'email': email } )
 
     # if the student is not found return with an error response
     if not student:
-        return Response( 'No student found.', status = 500, mimetype = 'application/json' )
+        return Response( 'No student found.', status = 400, mimetype = 'application/json' )
     
     # find the corresponding course
     course = courses.find_one( { 'courseID': data[ 'courseID' ] } )
     
     # if the course does not exists return with an error response
     if not course:
-        return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
+        return Response( 'The course does not exist.', status = 400, mimetype = 'application/json' )
     
     # ( optional ) to not include the ObjectId
     # del course[ '_id' ]
@@ -201,11 +201,11 @@ def update_course():
 
     # if course_id is empty return with an error response
     if not course_id:
-        return Response( 'Improper arguments', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper arguments', status = 400, mimetype = 'application/json' )
     
     # if there is no course corresponding to the provided courseID return with an error response
     if courses.find( { 'courseID': course_id } ).count() == 0:
-        return Response( 'The course does not exist.', status = 500, mimetype = 'application/json' )
+        return Response( 'The course does not exist.', status = 400, mimetype = 'application/json' )
 
     # initialize request data object
     data = None
@@ -219,7 +219,7 @@ def update_course():
     
     # if json request data doesn't contain all of the required key-values return with an error response
     if 'courseID' not in data or 'name' not in data or 'ects' not in data or 'description' not in data:
-        return Response( 'Improper request data', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request data', status = 400, mimetype = 'application/json' )
     
     # update the course
     courses.update_one( { 'courseID': course_id }, { '$set': {
@@ -245,11 +245,11 @@ def delete_student():
 
     # if email is empty return with an error response
     if not email:
-        return Response( 'Improper request arguments', status = 500, mimetype = 'application/json' )
+        return Response( 'Improper request arguments', status = 400, mimetype = 'application/json' )
     
     # if there is no student corresponding to the given email return with an error response
     if students.find( { 'email': email } ).count() == 0:
-        return Response( 'No student found.', status = 500, mimetype = 'application/json' )
+        return Response( 'No student found.', status = 400, mimetype = 'application/json' )
     
     # delete the student
     students.delete_one( { 'email': email } )

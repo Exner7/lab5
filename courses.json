@@ -1,0 +1,33 @@
+{
+	"_id" : {"$oid" : "6087d1e5cb85fadfb0b30631"},
+	"name" : "Information Systems",
+	"courseID" : "DS-512",
+	"ects" : 5
+}
+{
+	"_id" : {"$oid" : "6087f984cd59f039867e8f8e"},
+	"name" : "Web and Mobile Information Systems",
+	"courseID" : "DS-332",
+	"description" : "This course analyses the five main components of an Information System, the different types of IS and issues associated with the implementation and application of IS."
+}
+{
+	"_id" : {"$oid" : "6087fa9c9154393da63c44dc"},
+	"name" : "C Programming",
+	"courseID" : "DS-501",
+	"ects" : 7,
+	"description" : "The goal of this course is to introduce basic programming principles using the C programming language. C is a principal programming language and a fundamental component of C++ and Java."
+}
+{
+	"_id" : {"$oid" : "608843c91c1919c77205419c"},
+	"name" : "Instructional Methods",
+	"courseID" : "DS-706-ICT",
+	"ects" : 5,
+	"description" : "This course is designed to promote a fundamental understanding of the theoretical and applied knowledge related to instructional theories and models (principles, methods, strategies) for the design, development, implementation and evaluation of Technology Enhanced Learning Environments (TELE). The purpose of this course is to introduce students to the orchestrated elements of instruction."
+}
+{
+	"_id" : {"oid" : "60885ab5715c359ba2298f44"},
+	"name" : "Introduction to Cloud Computing",
+	"courseID" : "DS-526",
+	"ects" : 5,
+	"description" : "The main objective of this course is to introduce concepts related to the analysis, design and implementation of computation and storage clouds."
+}
