@@ -233,6 +233,31 @@ def update_course():
     return Response( 'Course updated successfully.', status = 200, mimetype = 'application/json' )
 
 
+# [ DELETE ] ( endpoint ): /delete-student
+#
+# Delete the student with the email
+# provided in the request arguments
+@app.route( '/delete-student', methods = [ 'DELETE' ] )
+def delete_student():
+
+    # get the email argument
+    email = request.args.get( 'email' )
+
+    # if email is empty return with an error response
+    if not email:
+        return Response( 'Improper request arguments', status = 500, mimetype = 'application/json' )
+    
+    # if there is no student corresponding to the given email return with an error response
+    if students.find( { 'email': email } ).count() == 0:
+        return Response( 'No student found.', status = 500, mimetype = 'application/json' )
+    
+    # delete the student
+    students.delete_one( { 'email': email } )
+
+    # return with a success response
+    return Response( 'Student deleted successfully.', status = 200, mimetype = 'application/json' )
+
+
 # ... Endpoints Declarations End
 
 

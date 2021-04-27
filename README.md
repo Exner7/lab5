@@ -73,3 +73,9 @@ The flask app is set to port 5000. So all endpoints are of the form:
 
     according to the request body json data.
 ---
+#### DELETE
+
+* **<code>/delete-student</code>**
+
+    Deletes the student with the <code>email</code> that is being provided as an argument.
+---
